@@ -1,0 +1,75 @@
+   public class Transport
+   {
+       private string name;
+       private bool toSchool;
+       private int num;
+       private int day;
+
+       public Transport(string name, int num, int day)
+       {
+           this.name = name;
+           this.toSchool = true;
+           this.num = num;
+           this.day = day;
+       }
+       public Transport(int num)
+       {
+           this.name = "aviv";
+           this.toSchool = false;
+           this.day = 4;
+           if (this.num >= 1 && this.num <= 50)
+           {
+               this.num = num;
+           }
+           else
+           {
+               this.num = 1;
+           }
+       }
+       public string GetName() { return name; }
+       public bool GetToSchool() { return toSchool; }
+       public int GetNum() { return num; }
+       public int GetDay() { return day; }
+   }
+
+   internal class Program
+   {
+      
+       public static int DayReport(Transport[] arr, int day, bool forward)
+       {
+           int sum = 0;
+           for (int i = 0; i < arr.Length; i++)
+           {
+               // בדיקה שההסעה ביום הנבחר
+               if (arr[i].GetDay() == day)
+               {
+                   // אם מחפשים הלוך
+                   if (forward && arr[i].GetToSchool())
+                       sum += arr[i].GetNum();
+
+                   // אם מחפשים חזור
+                   else if (!forward && !arr[i].GetToSchool())
+                       sum += arr[i].GetNum();
+               }
+           }
+           return sum;
+       }
+
+       public static void MoreForward(Transport[] arr)
+       {
+           // לולאה על כל הימים בשבוע (1 עד 6)
+           for (int day = 1; day <= 6; day++)
+           {
+               // חישוב מספר התלמידים בהסעות הלוך ביום הנוכחי
+               int forward = DayReport(arr, day, true);
+
+               // חישוב מספר התלמידים בהסעות חזור ביום הנוכחי
+               int backward = DayReport(arr, day, false);
+
+               // אם בהלוך יש יותר תלמידים – נדפיס את היום
+               if (forward > backward)
+               {
+                   Console.WriteLine("On day " + day + " there were more students in forward transports");
+               }
+           }
+       }
