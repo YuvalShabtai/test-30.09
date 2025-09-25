@@ -1,0 +1,29 @@
+        public static void Arrange(int[] arr)
+        {
+            // תרגיל: כתיבת פעולה  שמקבלת מערך של מספרים חיוביים ושליליים,
+            // ומעבירה את כל החיוביים (כולל 0) לתחילת המערך,
+            // ואחריהם את כל השליליים, תוך שמירה על הסדר המקורי של כל קבוצה.
+          
+            int indexPositive = 0; 
+            int[] array = new int[arr.Length];
+            for(int i = 0; i < arr.Length; i++)
+            {
+                if (arr[i] >= 0)
+                {
+                    array[indexPositive] = arr[i];
+                    indexPositive++;
+                }
+            }
+            int indexNegetive = indexPositive;
+            for(int i = 0; i < arr.Length ;i++)
+            {
+                if(arr[i] < 0)
+                {
+                    array[indexNegetive] = arr[i];
+                    indexNegetive++;
+
+                }
+            }
+            Console.WriteLine(string.Join(", ", array));
+
+        }
