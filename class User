@@ -1,0 +1,50 @@
+ public class User
+ {
+     private string name;
+     private int id;
+     private int[] friends;
+
+     public string GetName() { return name; }
+     public int GetId() { return id; }
+     public int[] GetFriends() { return friends; }
+
+     public int Mutual(User other)
+     {
+         int counter = 0;
+
+         // עוברים על כל החברים שלי
+         for (int i = 0; i < friends.Length; i++)
+         {
+             // בודקים כל חבר של המשתמש השני
+             for (int j = 0; j < other.friends.Length; j++)
+             {
+                 // אם יש מספר זהה - זה חבר משותף
+                 if (friends[i] == other.friends[j])
+                 {
+                     counter++;   // מגדילים את כמות החברים המשותפים
+                     break;       // עוצרים כדי לא לספור את אותו חבר פעמיים
+                 }
+             }
+         }
+
+         return counter; // מחזירים כמה חברים משותפים יש
+     }
+ }
+ public class SocialNetwork
+ {
+     private User[] users;
+
+     public bool ExactOne(User other)
+     {
+         // עוברים על כל המשתמשים ברשת
+         for (int i = 0; i < users.Length; i++)
+         {
+             // בדיקה אם למשתמש הנוכחי יש בדיוק חבר משותף אחד עם "other"
+             if (users[i].Mutual(other) == 1)
+             {
+                 return true; // מצאנו – אפשר להחזיר מיד
+             }
+         }
+         return false; // אם לא נמצא אף אחד עם בדיוק חבר אחד משותף
+     }
+ }
