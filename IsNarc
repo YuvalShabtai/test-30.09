@@ -1,0 +1,37 @@
+ public static bool IsNarc(int num)
+ {
+     int count = 0;
+     int temp = num;       // עותק זמני של המספר כדי לספור ספרות בלי לפגוע ב-num
+     int narcNum = 0;   // סכום הספרות בחזקת מספר הספרות
+
+     // לולאה לספירת מספר הספרות
+     while (temp > 0)
+     {
+         count++;
+         temp /= 10;
+     }
+
+     temp = num;  // מתחילים שוב בעותק כדי לפרק ספרות מבלי לשנות את המספר המקורי
+     while (temp > 0)
+     {
+         int digit = temp % 10;                      // לוקחים את הספרה האחרונה
+         narcNum += (int)Math.Pow(digit, count);     // מוסיפים ספרה בחזקת מספר הספרות לסכום
+         temp /= 10;                                 // מסירים את הספרה האחרונה
+     }
+
+     return narcNum == num;                          // בודקים אם המספר הוא נרקיסיסטי
+ }
+
+ public static void TheNarc(int n)
+ {
+     // לולאה שרצה מהמספר הראשון ועד המספר האחרון כולל
+     for (int i = 1; i <= n; i++)
+     {
+         // אם המספר הנוכחי הוא מספר נרקיסיסטי
+         if (IsNarc(i))
+         {
+             // מדפיסים את המספר עם פסיק ורווח
+             Console.Write($"{i}, ");
+         }
+     }
+ }
