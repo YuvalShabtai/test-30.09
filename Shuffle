@@ -1,0 +1,25 @@
+  public static void Shuffle(int[] arr)
+  {
+      Random rnd = new Random(); // יוצרים אובייקט להגרלות
+
+      // מבצעים 30 החלפות
+      for (int i = 0; i < 30; i++)
+      {
+          int index1 = rnd.Next(0, arr.Length); // מגריל אינדקס ראשון
+          int index2 = rnd.Next(0, arr.Length); // מגריל אינדקס שני
+
+          // בודקים שהאינדקסים שונים
+          if (index1 != index2)
+          {
+              // מבצעים החלפה בין הערכים בתאים
+              int temp = arr[index1];
+              arr[index1] = arr[index2];
+              arr[index2] = temp;
+          }
+      }
+      // מדפיסים את הערכים של המערך לאחר הערבול
+      for (int i = 0; i < arr.Length; i++)
+      {
+          Console.WriteLine(arr[i]);
+      }
+  }
