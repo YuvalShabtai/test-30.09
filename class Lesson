@@ -1,0 +1,75 @@
+public class Lesson
+{
+    private int id;       // קוד המקצוע הנלמד
+    private int hh;       // השעה שבה השיעור מתחיל
+    private int mm;       // הדקה שבה השיעור מתחיל
+    private int duration; // משך השיעור בדקות
+
+    // פעולות גט לקבלת ערכים
+    public int GetId() { return id; }
+    public int GetHh() { return hh; }
+    public int GetMm() { return mm; }
+    public int GetDuration() { return duration; }
+
+    // פעולה פנימית – מחזירה אמת אם השיעור הנוכחי מתחיל מאוחר יותר משיעור אחר
+    public bool IsLater(Lesson other)
+    {
+        if (this.hh > other.hh) { return true; }
+        if (this.hh == other.hh && this.mm > other.mm) { return true; }
+        return false;
+    }
+}
+
+internal class LessonProgram
+{
+    // פעולה חיצונית – מוצאת את השיעור שהתחיל הכי מאוחר ומדפיסה את קוד המקצוע שלו
+    public static void Last(Lesson[] arr)
+    {
+        Lesson lastLesson = arr[0]; // נניח שהשיעור הראשון הוא המאוחר ביותר בתחילה
+
+        for (int i = 1; i < arr.Length; i++)
+        {
+            if (arr[i] != null && arr[i].IsLater(lastLesson))
+            {
+                lastLesson = arr[i]; // עדכון אם מצאנו שיעור שמתחיל מאוחר יותר
+            }
+        }
+
+        Console.WriteLine(lastLesson.GetId()); 
+    }
+
+    // פעולה חיצונית – מחזירה את סך כל הדקות של כל שיעורי מקצוע מסוים (id)
+    public static int SumDuration(Lesson[] arr, int id)
+    {
+        int sum = 0;
+        for (int i = 0; i < arr.Length; i++)
+        {
+            if (arr[i] != null && arr[i].GetId() == id)
+            {
+                sum += arr[i].GetDuration(); // הוספת משך השיעור לסכום
+            }
+        }
+        return sum;
+    }
+
+    // פעולה חיצונית – מוצאת את המקצוע שסך השיעורים שלו הכי ארוך ביום הלימודים
+    public static int Longest(Lesson[] arr)
+    {
+        int biggestSumDuration = -1; // שמירה על הסכום הגדול ביותר עד עכשיו
+        int biggestDurationId = 0;   // שמירה על הקוד של המקצוע עם הסכום הגדול ביותר
+
+        for (int i = 0; i < arr.Length; i++)
+        {
+            if (arr[i] != null)
+            {
+                int sumDuration = SumDuration(arr, arr[i].GetId()); // סך הדקות של המקצוע
+                if (sumDuration > biggestSumDuration)
+                {
+                    biggestSumDuration = sumDuration;       // עדכון ערך מקסימלי חדש
+                    biggestDurationId = arr[i].GetId();     // עדכון הקוד של המקצוע המתאים
+                }
+            }
+        }
+        return biggestDurationId; // החזרת הקוד של המקצוע הארוך ביותר
+    }
+}
