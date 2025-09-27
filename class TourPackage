@@ -1,0 +1,75 @@
+public class TourPackage
+{
+    private int id;
+    private int price;
+    private int maxTime;
+    private int maxData;
+    private int extra;
+
+    public TourPackage(int id, int price, int maxTime, int maxData)
+    {
+        // פעולה בונה – אתחול כל התכונות, extra מתחיל כ־0
+        this.id = id;
+        this.price = price;
+        this.maxTime = maxTime;
+        this.maxData = maxData;
+        this.extra = 0;
+    }
+
+    public void SetExtra(int minutes, int usage)
+    {
+        // פעולה פנימית – מחשבת כמה לשלם על חריגה לפי דקות וגלישה
+        int extraMinutes = 0;
+        int extraUsage = 0;
+
+        if (minutes > maxTime)
+        {
+            extraMinutes = minutes - maxTime;
+        }
+        if (usage > maxData)
+        {
+            extraUsage = (usage - maxData) * 2;
+        }
+
+        this.extra = extraMinutes + extraUsage;
+    }
+
+    public int GetExtra() { return this.extra; }  // גישה לערך התוספת
+    public int GetId() { return this.id; }        // גישה למספר הזיהוי של הלקוח
+}
+
+internal class TourPackageProgram
+{
+    public static int Calculate(TourPackage[] packages)
+    {
+        // פעולה חיצונית – סופרת כמה לקוחות צריכים לשלם תוספת
+        int counter = 0;
+
+        for (int i = 0; i < packages.Length; i++)
+        {
+            if (packages[i] != null && packages[i].GetExtra() > 0)
+            {
+                counter++;
+            }
+        }
+
+        return counter;
+    }
+
+    public static int[] Customers(TourPackage[] packages)
+    {
+        // פעולה חיצונית – מחזירה מערך של מספרי הזיהוי של כל הלקוחות שחרגו
+        int index = 0;
+        int[] arr = new int[Calculate(packages)];
+
+        for (int i = 0; i < packages.Length; i++)
+        {
+            if (packages[i].GetExtra() > 0)
+            {
+                arr[index] = packages[i].GetId();
+                index++;
+            }
+        }
+        return arr;
+    }
+}
