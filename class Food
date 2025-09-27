@@ -1,0 +1,79 @@
+public class Food
+{
+    private string name;     // שם המאכל
+    private int calories;    // מספר קלוריות
+    private int type;        // סוג המאכל: 1=צומח, 2=חי, 3=מעובד 
+
+    // פעולה בונה – אתחול כל התכונות
+    public Food(string name, int calories, int type)
+    {
+        this.name = name;
+        this.calories = calories;
+        this.type = type;
+    }
+
+    // גטרים נדרשים לשימוש מחוץ למחלקה
+    public int GetCalories() { return calories; }
+    public int GetFoodType() { return type; }
+}
+
+public class Meal
+{
+    private Food[] arrFood; // מערך המאכלים בארוחה
+    private int num;        // מספר המאכלים שנוספו בפועל (קטן מגודל המערך)
+
+    // פעולה בונה – יוצרת מערך בגודל 15 ומאתחלת את המונה לאפס
+    public Meal()
+    {
+        this.arrFood = new Food[15];
+        this.num = 0;
+    }
+
+    // גטרים
+    public Food[] GetArrFood() { return arrFood; }
+    public int GetNum() { return num; }
+
+    // פעולה להוספת מאכל לארוחה (רק אם הסך לא עובר 1000 קלוריות)
+    public void AddToMeal(Food f)
+    {
+        int mealCalories = 0;
+
+        // חישוב סך הקלוריות של המאכלים הקיימים
+        for (int i = 0; i < num; i++)
+        {
+            mealCalories += arrFood[i].GetCalories();
+        }
+
+        // בדיקה אם אפשר להוסיף את המאכל החדש מבלי לעבור את 1000 קלוריות
+        if (mealCalories + f.GetCalories() <= 1000)
+        {
+            arrFood[num] = f; // הוספת המאכל במקום הפנוי
+            num++;            // עדכון מספר המאכלים בארוחה
+        }
+    }
+}
+
+internal class MealProgram
+{
+    // פעולה חיצונית – מחזירה "healthy" אם יש יותר מאכלים מהצומח מאשר מהחי/מעובדים
+    public static string Healthy(Meal m)
+    {
+        int healthyCounter = 0;     // מונה מאכלים מהצומח
+        int notHealthyCounter = 0;  // מונה כל השאר (חי/מעובד)
+
+        // מעבר על כל המאכלים הקיימים בארוחה
+        for (int i = 0; i < m.GetNum(); i++)
+        {
+            if (m.GetArrFood()[i].GetFoodType() == 1)
+                healthyCounter++;
+            else
+                notHealthyCounter++;
+        }
+
+        // החלטה בהתאם להשוואה
+        if (healthyCounter > notHealthyCounter)
+            return "healthy";
+        else
+            return "not healthy";
+    }
+}
