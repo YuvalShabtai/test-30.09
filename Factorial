@@ -1,0 +1,62 @@
+ public static int Factorial(int num)
+ {
+     int result = 1;
+
+     if(num == 0) { return result; }
+           
+     for (int i = 1; i <= num; i++)
+     {
+         result *= i;
+     }
+     return result;
+ }
+
+ public static bool IsStrong(int num)
+ {
+     // בדיקה שמדובר במספר תלת־ספרתי
+     if (num < 100 || num > 999)
+         return false;
+
+     int sum = 0;
+     int temp = num;
+
+     // חישוב סכום עצרת הספרות
+     while (temp > 0)
+     {
+         int digit = temp % 10;
+         sum += Factorial(digit);
+         temp /= 10;
+     }
+
+     return sum == num;
+ }
+
+ public static void ReturnIsStrong()
+ {
+     Console.WriteLine("please enter a number");
+     int num = int.Parse(Console.ReadLine());
+
+     if (IsStrong(num)) { Console.WriteLine("The number is strong"); }
+     else { Console.WriteLine("The number is not strong"); }
+ }
+
+ public static int[] StrongOnly(int[] arr)
+ {
+     int index = 0;
+     int counter = 0;
+     for (int i = 0; i < arr.Length; i++)
+     {
+         if (IsStrong(arr[i])) { counter++; }
+     }
+
+     int[] result = new int[counter];
+     for (int i = 0; i < arr.Length; i++)
+     {
+         if (IsStrong(arr[i]))
+         {
+             result[index] = arr[i];
+             index++;
+         }
+     }
+     return result;
+ }
