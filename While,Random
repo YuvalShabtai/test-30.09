@@ -1,0 +1,46 @@
+  // ============================
+        // פירוק מספר עם temp ולולאה
+        // ============================
+        int number = 5321;
+        int temp = number;
+        int digitCount = 0;
+
+        Console.WriteLine("פירוק מספר עם לולאה:");
+        while (temp > 0)
+        {
+            int digit = temp % 10; // חילוץ ספרה אחרונה
+            Console.WriteLine(digit);
+            temp /= 10;            // הסרת ספרה אחרונה
+            digitCount++;          // מונה ספרות
+        }
+
+        Console.WriteLine("סך הספרות במספר: " + digitCount);
+        Console.WriteLine("---------------");
+
+
+        // ============================
+        // פירוק מספר ידני ללא לולאה
+        // ============================
+        Console.WriteLine("פירוק מספר ידני עם % ו-/ :");
+
+        int ones = number % 10;               // ספרת אחדות
+        int tens = (number / 10) % 10;        // ספרת עשרות
+        int hundreds = (number / 100) % 10;   // ספרת מאות
+        int thousands = (number / 1000) % 10; // ספרת אלפים
+
+   
+        // ============================
+        // הגרלת מספר רנדומלי
+        // ============================
+        // יצירת אובייקט מחולל רנדומלי
+        Random rnd = new Random();
+
+        int randomNumber = rnd.Next(1, 101); // מספר בין 1 ל-100
+        Console.WriteLine("מספר רנדומלי יחיד: " + randomNumber);
+
+        Console.WriteLine("מספרים רנדומליים בתוך לולאה:");
+        for (int i = 0; i < 5; i++)
+        {
+            Console.WriteLine(rnd.Next(1, 101));
+        }
+    }
