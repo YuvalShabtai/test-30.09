@@ -1,0 +1,26 @@
+ public static bool Success(int num)
+ {
+     // פעולה שבודקת אם שחקן הצליח במשחק קליעה למטרה
+     // ההצלחה מוגדרת לפי אחד מהתנאים: ממוצע מעל 5, רוב חיצים עם 6+, או לפחות חץ אחד עם 10
+
+     int countAbove6 = 0; // מונה חיצים עם 6 נקודות ומעלה
+     int countIsTen = 0; // מונה חיצים עם 10 נקודות
+     int sum = 0; // סכום הנקודות לחישוב ממוצע
+
+     for(int i = 0;i < num;i++)
+     {
+         Console.WriteLine("please enter a score per arrow");
+         int score = int.Parse(Console.ReadLine());
+
+         if(score >= 6) { countAbove6++; }
+         if(score == 10) { countIsTen++; }
+         sum += score;   
+     }
+     double avg = (double) sum / num;
+
+     if (countAbove6 > num/2) {return true; } // אם רוב החיצים 6 ומעלה
+     if (avg > 5.0) { return true; } // אם הממוצע גדול מ־5
+     if (countIsTen >= 1) {  return true; } // אם יש לפחות חץ אחד עם 10
+
+     return false;
+ }
